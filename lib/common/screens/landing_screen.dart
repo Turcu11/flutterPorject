@@ -7,12 +7,10 @@ import '../screens/main_screen.dart';
 class LandingScreen extends StatelessWidget {
   const LandingScreen({super.key});
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        // backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         backgroundColor: themes.MyAppColors.darkBlue,
         title: const Text(strings.appTitle),
       ),
@@ -42,17 +40,32 @@ class LandingScreen extends StatelessWidget {
         children: [
           Center(
             child: ElevatedButton.icon(
-                style: ButtonStyle(
-                  minimumSize: MaterialStateProperty.all<Size>(Size(200, 50)),
-                ),
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => MainScreen()),
-                  );
-                },
-                icon: const Icon(Icons.arrow_forward_ios_rounded),
-                label: const Text(strings.getStarted)),
+              style: ButtonStyle(
+                minimumSize:
+                    MaterialStateProperty.all<Size>(const Size(200, 50)),
+              ),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => MainScreen()),
+                );
+                const Tooltip(
+                  message: 'Go to the next screen',
+                );
+              },
+              icon: const Icon(
+                Icons.arrow_forward_ios_rounded,
+                color: Colors.red,
+                size: 20.0,
+              ),
+              label: const Text(
+                strings.getStarted,
+                style: TextStyle(
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white),
+              ),
+            ),
           ),
           const SizedBox(
             height: 50.0,
