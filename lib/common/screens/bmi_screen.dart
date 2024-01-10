@@ -23,17 +23,19 @@ class _BmiScreenState extends State<BmiScreen> {
     return (weight / (height * height)) * 703;
   }
 
-  void calculateBMI() {
-    double height = double.parse(_heightController.text);
-    double weight = double.parse(_weightController.text);
+void calculateBMI() {
+  String heightText = _heightController.text;
+  String weightText = _weightController.text;
+
+  if (heightText.isEmpty || weightText.isEmpty) {
+    _bmiResult = 'Please enter both height and weight.';
+  } else if (!isNumeric(heightText) || !isNumeric(weightText)) {
+    _bmiResult = 'Please enter valid numbers.';
+  } else {
+    double height = double.parse(heightText);
+    double weight = double.parse(weightText);
     double bmi;
 
-    if (_heightController.text.isEmpty || _weightController.text.isEmpty) {
-      const snackBar =
-          SnackBar(content: Text('Height and Weight must be greater than 0'));
-      ScaffoldMessenger.of(context).showSnackBar(snackBar);
-      return;
-    }
     if (_measuringSystem == 'Metric') {
       bmi = calculateMetricBMI(height, weight);
     } else {
@@ -41,11 +43,17 @@ class _BmiScreenState extends State<BmiScreen> {
     }
 
     _bmiResult = 'Your BMI is ${bmi.toStringAsFixed(2)}';
-    final snackBar =
-        SnackBar(content: Text('Your BMI is ${bmi.toStringAsFixed(2)}'));
-    ScaffoldMessenger.of(context).showSnackBar(snackBar);
-    setState(() {});
   }
+
+  setState(() {});
+}
+
+bool isNumeric(String s) {
+  if(s == null) {
+    return false;
+  }
+  return double.tryParse(s) != null;
+}
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +69,7 @@ class _BmiScreenState extends State<BmiScreen> {
             ),
           ),
           const SizedBox(
-            height: 45,
+            height: 35,
           ),
           Center(
             child: Column(
@@ -91,7 +99,7 @@ class _BmiScreenState extends State<BmiScreen> {
                   },
                 ),
                 const SizedBox(
-                  height: 75,
+                  height: 55,
                 ),
                 const Text(
                   strings.height,
