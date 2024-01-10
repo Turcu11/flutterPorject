@@ -8,3 +8,8 @@ const String waistToHeightIndex = 'WHtR';
 const String bodyAdiposityIndex = 'BAI';
 //strings for the BMI screen
 const String bmiPrompt = 'Please select your measuring system';
+const String metric = 'Metric';
+const String imperial = 'Imperial';
+const String height = 'Height';
+const String weight = 'Weight';
+const String results = 'Results';
