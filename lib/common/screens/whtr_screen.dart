@@ -13,7 +13,7 @@ class _WhtrScreenState extends State<WhtrScreen> {
   String _measuringSystem = 'Metric'; // Initial value to avoid null
   final TextEditingController _heightController = TextEditingController();
   final TextEditingController _waistController = TextEditingController();
-  String _bmiResult = '';
+  String _whtrResult = '';
 
   double calculateMetricWHtR(double height, double waist) {
     return (waist / height);
@@ -30,9 +30,9 @@ class _WhtrScreenState extends State<WhtrScreen> {
     String waistText = _waistController.text;
 
     if (heightText.isEmpty || waistText.isEmpty) {
-      _bmiResult = 'Please enter both height and waist.';
+      _whtrResult = 'Please enter both height and waist.';
     } else if (!isNumeric(heightText) || !isNumeric(waistText)) {
-      _bmiResult = 'Please enter valid numbers.';
+      _whtrResult = 'Please enter valid numbers.';
     } else {
       double height = double.parse(heightText);
       double waist = double.parse(waistText);
@@ -44,7 +44,7 @@ class _WhtrScreenState extends State<WhtrScreen> {
         whtr = calculateImperialWHtR(height, waist);
       }
 
-      _bmiResult = 'Your WHtR is ${whtr.toStringAsFixed(2)}';
+      _whtrResult = 'Your WHtR is ${whtr.toStringAsFixed(2)}';
     }
 
     setState(() {});
@@ -167,7 +167,7 @@ class _WhtrScreenState extends State<WhtrScreen> {
                   ),
                 ),
                 Text(
-                  _bmiResult,
+                  _whtrResult,
                   style: const TextStyle(
                     fontSize: 28.0,
                     fontWeight: FontWeight.bold,
