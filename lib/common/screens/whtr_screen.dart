@@ -1,48 +1,50 @@
 import 'package:flutter/material.dart';
 import '../strings/strings.dart' as strings;
 
-class BmiScreen extends StatefulWidget {
-  const BmiScreen({Key? key}) : super(key: key);
+class WhtrScreen extends StatefulWidget {
+  const WhtrScreen({Key? key}) : super(key: key);
 
   @override
   // ignore: library_private_types_in_public_api
-  _BmiScreenState createState() => _BmiScreenState();
+  _WhtrScreenState createState() => _WhtrScreenState();
 }
 
-class _BmiScreenState extends State<BmiScreen> {
+class _WhtrScreenState extends State<WhtrScreen> {
   String _measuringSystem = 'Metric'; // Initial value to avoid null
   final TextEditingController _heightController = TextEditingController();
-  final TextEditingController _weightController = TextEditingController();
+  final TextEditingController _waistController = TextEditingController();
   String _bmiResult = '';
 
-  double calculateMetricBMI(double height, double weight) {
-    return ((weight / height / height) * 10000);
+  double calculateMetricWHtR(double height, double waist) {
+    return (waist / height);
   }
 
-  double calculateImperialBMI(double height, double weight) {
-    return (weight / (height * height)) * 703;
+  double calculateImperialWHtR(double height, double waist) {
+    height = height * 2.54;
+    waist = waist * 2.54;
+    return (waist / height);
   }
 
   void calculateBMI() {
     String heightText = _heightController.text;
-    String weightText = _weightController.text;
+    String waistText = _waistController.text;
 
-    if (heightText.isEmpty || weightText.isEmpty) {
-      _bmiResult = 'Please enter both height and weight.';
-    } else if (!isNumeric(heightText) || !isNumeric(weightText)) {
+    if (heightText.isEmpty || waistText.isEmpty) {
+      _bmiResult = 'Please enter both height and waist.';
+    } else if (!isNumeric(heightText) || !isNumeric(waistText)) {
       _bmiResult = 'Please enter valid numbers.';
     } else {
       double height = double.parse(heightText);
-      double weight = double.parse(weightText);
-      double bmi;
+      double waist = double.parse(waistText);
+      double whtr;
 
       if (_measuringSystem == 'Metric') {
-        bmi = calculateMetricBMI(height, weight);
+        whtr = calculateMetricWHtR(height, waist);
       } else {
-        bmi = calculateImperialBMI(height, weight);
+        whtr = calculateImperialWHtR(height, waist);
       }
 
-      _bmiResult = 'Your BMI is ${bmi.toStringAsFixed(2)}';
+      _bmiResult = 'Your WHtR is ${whtr.toStringAsFixed(2)}';
     }
 
     setState(() {});
@@ -64,7 +66,7 @@ class _BmiScreenState extends State<BmiScreen> {
           const Padding(
             padding: EdgeInsets.all(10.0),
             child: Text(
-              strings.bmiTitle,
+              strings.whtrTitle,
               style: TextStyle(fontSize: 24),
               textAlign: TextAlign.center,
             ),
@@ -128,7 +130,7 @@ class _BmiScreenState extends State<BmiScreen> {
                   width: 30,
                 ),
                 const Text(
-                  strings.weight,
+                  strings.waist,
                   style: TextStyle(fontSize: 28.0),
                 ),
                 const SizedBox(
@@ -137,7 +139,7 @@ class _BmiScreenState extends State<BmiScreen> {
                 SizedBox(
                   width: 100,
                   child: TextField(
-                    controller: _weightController,
+                    controller: _waistController,
                     keyboardType: TextInputType.number,
                   ),
                 ),
@@ -145,7 +147,7 @@ class _BmiScreenState extends State<BmiScreen> {
                   width: 30,
                 ),
                 Text(
-                  _measuringSystem == strings.metric ? 'kg' : 'lb',
+                  _measuringSystem == strings.metric ? 'cm' : 'in',
                   style: const TextStyle(fontSize: 22.0),
                 ),
               ],
@@ -177,7 +179,7 @@ class _BmiScreenState extends State<BmiScreen> {
                 ElevatedButton.icon(
                   onPressed: () => calculateBMI(),
                   icon: const Icon(Icons.calculate),
-                  label: const Text("Calculate BMI"),
+                  label: const Text("Calculate WHtR"),
                 ),
               ],
             ),
@@ -194,12 +196,11 @@ class _BmiScreenState extends State<BmiScreen> {
                 insetPadding: const EdgeInsets.all(120),
                 title: const Text(strings.resultInterpretation),
                 content: const Column(
-                  mainAxisSize: MainAxisSize
-                      .min, //this is here to make my column fit inside the alert dialog
+                  mainAxisSize: MainAxisSize.min, //this is here to make my column fit inside the alert dialog
                   children: <Widget>[
-                    Text(strings.bmiDefinition),
+                    Text(strings.whtrDefinition),
                     Text("\n"),
-                    Text(strings.bmiInterpretation),
+                    Text(strings.whtrInterpretation),
                   ],
                 ),
                 actions: <Widget>[

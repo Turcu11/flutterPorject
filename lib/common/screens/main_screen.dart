@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../themes/themes.dart' as themes;
 import '../strings/strings.dart' as strings;
 import '../screens/bmi_screen.dart';
+import '../screens/whtr_screen.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({Key? key}) : super(key: key);
@@ -18,9 +19,7 @@ class _MainScreenState extends State<MainScreen> {
 
   static const List<Widget> _widgetOptions = <Widget>[
     BmiScreen(),
-    Text(
-      'Index 1: Business',
-    ),
+    WhtrScreen(),
     Text(
       'Index 2: School',
     ),

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../strings/strings.dart' as strings;
-import '../themes/themes.dart' as themes;
 import '../screens/main_screen.dart';
 
 class LandingScreen extends StatelessWidget {
@@ -11,27 +10,42 @@ class LandingScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: themes.MyAppColors.darkBlue,
+        leading: const Icon(
+          Icons.speed,
+          color: Colors.red,
+        ),
         title: const Text(strings.appTitle),
       ),
-      body: const Center(
+      body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Center(
+            const Center(
                 child: Icon(
               Icons.favorite,
               color: Colors.red,
               size: 100.0,
             )),
-            SizedBox(
+            const SizedBox(
               height: 25.0,
             ),
-            Text(
+            const Text(
               strings.appWelcome,
               // ignore: deprecated_member_use
               textScaleFactor: 2,
             ),
+            const SizedBox(
+              height: 25.0,
+            ),
+            Container(
+              padding: const EdgeInsets.all(45.0),
+              child: const Text(
+                strings.appDescription,
+                // ignore: deprecated_member_use
+                textScaleFactor: 1.2,
+                textAlign: TextAlign.center,
+              ),
+            )
           ],
         ),
       ),
