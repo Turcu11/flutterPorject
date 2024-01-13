@@ -126,11 +126,18 @@ class _BaiScreenState extends State<BaiScreen> {
 
       if (_measuringSystem == 'Metric') {
         bai = calculateMetricBAI(height, hip);
-        if(_userGender == 'Male'){
+        if (_userGender == 'Male') {
           generateMaleInterpretation(bai);
+        } else {
+          generateFemaleInterpretation(bai);
         }
       } else {
         bai = calculateImperialBAI(height, hip);
+        if (_userGender == 'Male') {
+          generateMaleInterpretation(bai);
+        } else {
+          generateFemaleInterpretation(bai);
+        }
       }
 
       _baiResult = 'Your BAI is ${bai.toStringAsFixed(2)}%';
@@ -350,6 +357,13 @@ class _BaiScreenState extends State<BaiScreen> {
                 ),
                 Text(
                   _baiResult,
+                  style: const TextStyle(
+                    fontSize: 28.0,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Text(
+                  _baiInterpretation,
                   style: const TextStyle(
                     fontSize: 28.0,
                     fontWeight: FontWeight.bold,
