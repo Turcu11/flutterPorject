@@ -14,6 +14,17 @@ class _WhtrScreenState extends State<WhtrScreen> {
   final TextEditingController _heightController = TextEditingController();
   final TextEditingController _waistController = TextEditingController();
   String _whtrResult = '';
+  String _whtrInterpretation = '';
+
+  void generateWHtRInterpretation(double whtr) {
+    if (whtr < 0.5) {
+      _whtrInterpretation = 'Low risk';
+    } else if (whtr < 0.6) {
+      _whtrInterpretation = 'Moderate risk';
+    } else {
+      _whtrInterpretation = 'High risk';
+    }
+  }
 
   double calculateMetricWHtR(double height, double waist) {
     return (waist / height);
@@ -43,6 +54,7 @@ class _WhtrScreenState extends State<WhtrScreen> {
       } else {
         whtr = calculateImperialWHtR(height, waist);
       }
+      generateWHtRInterpretation(whtr);
 
       _whtrResult = 'Your WHtR is ${whtr.toStringAsFixed(2)}';
     }
@@ -61,130 +73,172 @@ class _WhtrScreenState extends State<WhtrScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: <Widget>[
-          const Padding(
-            padding: EdgeInsets.all(10.0),
-            child: Text(
-              strings.whtrTitle,
-              style: TextStyle(fontSize: 24),
-              textAlign: TextAlign.center,
-            ),
+      body: SingleChildScrollView(
+        child: ConstrainedBox(
+          constraints: BoxConstraints(
+            maxHeight: MediaQuery.of(context).size.height,
           ),
-          const SizedBox(
-            height: 35,
+          child: Column(
+            children: <Widget>[
+              Column(
+                children: <Widget>[
+                  const Padding(
+                    padding: EdgeInsets.all(10.0),
+                    child: Text(
+                      strings.whtrTitle,
+                      style: TextStyle(fontSize: 24),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 35,
+                  ),
+                  Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        const Text(strings.metric),
+                        Radio<String>(
+                          value: strings.metric,
+                          groupValue: _measuringSystem,
+                          onChanged: (String? value) {
+                            setState(() {
+                              _measuringSystem = value!;
+                            });
+                          },
+                        ),
+                        const SizedBox(
+                          width: 40,
+                        ),
+                        const Text(strings.imperial),
+                        Radio<String>(
+                          value: strings.imperial,
+                          groupValue: _measuringSystem,
+                          onChanged: (String? value) {
+                            setState(() {
+                              _measuringSystem = value!;
+                            });
+                          },
+                        ),
+                        const SizedBox(
+                          height: 40,
+                        ),
+                        Column(
+                          children: <Widget>[
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                Column(
+                                  children: <Widget>[
+                                    const Text(
+                                      strings.height,
+                                      style: TextStyle(fontSize: 28.0),
+                                    ),
+                                    const SizedBox(
+                                      width: 30,
+                                    ),
+                                    SizedBox(
+                                      width: 100,
+                                      child: TextField(
+                                        controller: _heightController,
+                                        keyboardType: TextInputType.number,
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                      width: 30,
+                                    ),
+                                    Text(
+                                      _measuringSystem == strings.metric
+                                          ? strings.cm
+                                          : strings.inches,
+                                      style: const TextStyle(fontSize: 22.0),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(
+                                  height: 30,
+                                  width: 50,
+                                ),
+                                Column(children: <Widget>[
+                                  const Text(
+                                    strings.waist,
+                                    style: TextStyle(fontSize: 28.0),
+                                  ),
+                                  const SizedBox(
+                                    width: 50,
+                                  ),
+                                  SizedBox(
+                                    width: 100,
+                                    child: TextField(
+                                      controller: _waistController,
+                                      keyboardType: TextInputType.number,
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    width: 30,
+                                  ),
+                                  Text(
+                                    _measuringSystem == strings.metric
+                                        ? strings.cm
+                                        : strings.inches,
+                                    style: const TextStyle(fontSize: 22.0),
+                                  ),
+                                ])
+                              ],
+                            )
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              Expanded(
+                child: Column(
+                  children: [
+                    const SizedBox(
+                      height: 50,
+                    ),
+                    const Text(
+                      strings.result,
+                      style: TextStyle(
+                        fontSize: 28.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Text(
+                      _whtrResult,
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                        fontSize: 28.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Text(
+                      _whtrInterpretation,
+                      style: const TextStyle(
+                        fontSize: 28.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 60,
+                    ),
+                    ElevatedButton.icon(
+                      style: ElevatedButton.styleFrom(
+                        minimumSize: const Size(250, 60),
+                      ),
+                      onPressed: () => calculateBMI(),
+                      icon: const Icon(Icons.calculate),
+                      label: const Text("Calculate WHtR",
+                          style: TextStyle(fontSize: 20)),
+                    ),
+                  ],
+                ),
+              ),
+            ],
           ),
-          Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                const Text(strings.metric),
-                Radio<String>(
-                  value: strings.metric,
-                  groupValue: _measuringSystem,
-                  onChanged: (String? value) {
-                    setState(() {
-                      _measuringSystem = value!;
-                    });
-                  },
-                ),
-                const SizedBox(
-                  width: 40,
-                ),
-                const Text(strings.imperial),
-                Radio<String>(
-                  value: strings.imperial,
-                  groupValue: _measuringSystem,
-                  onChanged: (String? value) {
-                    setState(() {
-                      _measuringSystem = value!;
-                    });
-                  },
-                ),
-                const SizedBox(
-                  height: 55,
-                ),
-                const Text(
-                  strings.height,
-                  style: TextStyle(fontSize: 28.0),
-                ),
-                const SizedBox(
-                  width: 30,
-                ),
-                SizedBox(
-                  width: 100,
-                  child: TextField(
-                    controller: _heightController,
-                    keyboardType: TextInputType.number,
-                  ),
-                ),
-                const SizedBox(
-                  width: 30,
-                ),
-                Text(
-                  _measuringSystem == strings.metric ? 'cm' : 'in',
-                  style: const TextStyle(fontSize: 22.0),
-                ),
-                const SizedBox(
-                  height: 30,
-                  width: 30,
-                ),
-                const Text(
-                  strings.waist,
-                  style: TextStyle(fontSize: 28.0),
-                ),
-                const SizedBox(
-                  width: 50,
-                ),
-                SizedBox(
-                  width: 100,
-                  child: TextField(
-                    controller: _waistController,
-                    keyboardType: TextInputType.number,
-                  ),
-                ),
-                const SizedBox(
-                  width: 30,
-                ),
-                Text(
-                  _measuringSystem == strings.metric ? 'cm' : 'in',
-                  style: const TextStyle(fontSize: 22.0),
-                ),
-              ],
-            ),
-          ),
-          Expanded(
-            child: Column(
-              children: [
-                const SizedBox(
-                  height: 50,
-                ),
-                const Text(
-                  'Result: ',
-                  style: TextStyle(
-                    fontSize: 28.0,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                Text(
-                  _whtrResult,
-                  style: const TextStyle(
-                    fontSize: 28.0,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                const SizedBox(
-                  height: 40,
-                ),
-                ElevatedButton.icon(
-                  onPressed: () => calculateBMI(),
-                  icon: const Icon(Icons.calculate),
-                  label: const Text("Calculate WHtR"),
-                ),
-              ],
-            ),
-          ),
-        ],
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.help),
@@ -193,15 +247,19 @@ class _WhtrScreenState extends State<WhtrScreen> {
             context: context,
             builder: (BuildContext context) {
               return AlertDialog(
-                insetPadding: const EdgeInsets.all(120),
+                insetPadding:
+                    EdgeInsets.all(MediaQuery.of(context).size.width * 0.1),
                 title: const Text(strings.resultInterpretation),
-                content: const Column(
-                  mainAxisSize: MainAxisSize.min, //this is here to make my column fit inside the alert dialog
-                  children: <Widget>[
-                    Text(strings.whtrDefinition),
-                    Text("\n"),
-                    Text(strings.whtrInterpretation),
-                  ],
+                content: const SingleChildScrollView(
+                  child: Column(
+                    mainAxisSize: MainAxisSize
+                        .min, //this is here to make my column fit inside the alert dialog
+                    children: <Widget>[
+                      Text(strings.whtrDefinition),
+                      Text("\n"),
+                      Text(strings.whtrInterpretation),
+                    ],
+                  ),
                 ),
                 actions: <Widget>[
                   TextButton(

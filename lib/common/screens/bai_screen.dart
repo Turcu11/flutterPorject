@@ -157,230 +157,249 @@ class _BaiScreenState extends State<BaiScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: <Widget>[
-          const Padding(
-            padding: EdgeInsets.all(10.0),
-            child: Text(
-              strings.baiTitle,
-              style: TextStyle(fontSize: 24),
-              textAlign: TextAlign.center,
-            ),
+      body: SingleChildScrollView(
+        child: ConstrainedBox(
+          constraints: BoxConstraints(
+            maxHeight: MediaQuery.of(context).size.height,
           ),
-          const SizedBox(
-            height: 35,
-          ),
-          Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Center(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Column(
-                        children: <Widget>[
-                          const Text(strings.metric),
-                          Radio<String>(
-                            value: strings.metric,
-                            groupValue: _measuringSystem,
-                            onChanged: (String? value) {
-                              setState(() {
-                                _measuringSystem = value!;
-                              });
-                            },
-                          ),
-                          const Text(strings.imperial),
-                          Radio<String>(
-                            value: strings.imperial,
-                            groupValue: _measuringSystem,
-                            onChanged: (String? value) {
-                              setState(() {
-                                _measuringSystem = value!;
-                              });
-                            },
-                          ),
-                        ],
-                      ),
-                      const SizedBox(
-                        width: 60,
-                      ),
-                      Column(
-                        children: <Widget>[
-                          const Text(strings.baiPleaseSelectAge),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          const Text(strings.baiAge20to39),
-                          Radio<String>(
-                            value: strings.baiAge20to39,
-                            groupValue: _userAge,
-                            onChanged: (String? value) {
-                              setState(() {
-                                _userAge = value!;
-                              });
-                            },
-                          ),
-                          const Text(strings.baiAge40to59),
-                          Radio<String>(
-                            value: strings.baiAge40to59,
-                            groupValue: _userAge,
-                            onChanged: (String? value) {
-                              setState(() {
-                                _userAge = value!;
-                              });
-                            },
-                          ),
-                          const Text(strings.baiAge60to79),
-                          Radio<String>(
-                            value: strings.baiAge60to79,
-                            groupValue: _userAge,
-                            onChanged: (String? value) {
-                              setState(() {
-                                _userAge = value!;
-                              });
-                            },
-                          ),
-                        ],
-                      ),
-                      const SizedBox(
-                        width: 60,
-                      ),
-                      Column(
-                        children: <Widget>[
-                          const Text(strings.male),
-                          Radio<String>(
-                            value: strings.male,
-                            groupValue: _userGender,
-                            onChanged: (String? value) {
-                              setState(() {
-                                _userGender = value!;
-                              });
-                            },
-                          ),
-                          const Text(strings.female),
-                          Radio<String>(
-                            value: strings.female,
-                            groupValue: _userGender,
-                            onChanged: (String? value) {
-                              setState(() {
-                                _userGender = value!;
-                              });
-                            },
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
+          child: Column(
+            children: <Widget>[
+              const Padding(
+                padding: EdgeInsets.all(10.0),
+                child: Text(
+                  strings.baiTitle,
+                  style: TextStyle(fontSize: 24),
+                  textAlign: TextAlign.center,
                 ),
-                const SizedBox(
-                  height: 60,
-                ),
-                Column(
+              ),
+              const SizedBox(
+                height: 35,
+              ),
+              Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Column(
-                          children: <Widget>[
-                            const Text(
-                              strings.height,
-                              style: TextStyle(fontSize: 28.0),
-                            ),
-                            const SizedBox(
-                              width: 30,
-                            ),
-                            SizedBox(
-                              width: 80,
-                              child: TextField(
-                                controller: _heightController,
-                                keyboardType: TextInputType.number,
+                    Center(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Column(
+                            children: <Widget>[
+                              const Text(strings.metric),
+                              Radio<String>(
+                                value: strings.metric,
+                                groupValue: _measuringSystem,
+                                onChanged: (String? value) {
+                                  setState(() {
+                                    _measuringSystem = value!;
+                                  });
+                                },
                               ),
-                            ),
-                            const SizedBox(
-                              width: 30,
-                            ),
-                            Text(
-                              _measuringSystem == strings.metric ? 'cm' : 'in',
-                              style: const TextStyle(fontSize: 22.0),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 30,
-                          width: 50,
-                        ),
-                        Column(
-                          children: <Widget>[
-                            const Text(
-                              strings.hips,
-                              style: TextStyle(fontSize: 28.0),
-                            ),
-                            const SizedBox(
-                              width: 50,
-                            ),
-                            SizedBox(
-                              width: 100,
-                              child: TextField(
-                                controller: _hipController,
-                                keyboardType: TextInputType.number,
+                              const Text(strings.imperial),
+                              Radio<String>(
+                                value: strings.imperial,
+                                groupValue: _measuringSystem,
+                                onChanged: (String? value) {
+                                  setState(() {
+                                    _measuringSystem = value!;
+                                  });
+                                },
                               ),
-                            ),
-                            const SizedBox(
-                              width: 30,
-                            ),
-                            Text(
-                              _measuringSystem == strings.metric ? 'cm' : 'in',
-                              style: const TextStyle(fontSize: 22.0),
-                            ),
-                          ],
-                        )
-                      ],
+                            ],
+                          ),
+                          const SizedBox(
+                            width: 30,
+                          ),
+                          Column(
+                            children: <Widget>[
+                              const Text(strings.baiPleaseSelectAge),
+                              const SizedBox(
+                                height: 20,
+                              ),
+                              const Text(strings.baiAge20to39),
+                              Radio<String>(
+                                value: strings.baiAge20to39,
+                                groupValue: _userAge,
+                                onChanged: (String? value) {
+                                  setState(() {
+                                    _userAge = value!;
+                                  });
+                                },
+                              ),
+                              const Text(strings.baiAge40to59),
+                              Radio<String>(
+                                value: strings.baiAge40to59,
+                                groupValue: _userAge,
+                                onChanged: (String? value) {
+                                  setState(() {
+                                    _userAge = value!;
+                                  });
+                                },
+                              ),
+                              const Text(strings.baiAge60to79),
+                              Radio<String>(
+                                value: strings.baiAge60to79,
+                                groupValue: _userAge,
+                                onChanged: (String? value) {
+                                  setState(() {
+                                    _userAge = value!;
+                                  });
+                                },
+                              ),
+                            ],
+                          ),
+                          const SizedBox(
+                            width: 30,
+                          ),
+                          Column(
+                            children: <Widget>[
+                              const Text(strings.male),
+                              Radio<String>(
+                                value: strings.male,
+                                groupValue: _userGender,
+                                onChanged: (String? value) {
+                                  setState(() {
+                                    _userGender = value!;
+                                  });
+                                },
+                              ),
+                              const Text(strings.female),
+                              Radio<String>(
+                                value: strings.female,
+                                groupValue: _userGender,
+                                onChanged: (String? value) {
+                                  setState(() {
+                                    _userGender = value!;
+                                  });
+                                },
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 40,
+                    ),
+                    SingleChildScrollView(
+                      child: Column(
+                        children: <Widget>[
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Column(
+                                children: <Widget>[
+                                  const Text(
+                                    strings.height,
+                                    style: TextStyle(fontSize: 28.0),
+                                  ),
+                                  const SizedBox(
+                                    width: 30,
+                                  ),
+                                  SizedBox(
+                                    width: 80,
+                                    child: TextField(
+                                      controller: _heightController,
+                                      keyboardType: TextInputType.number,
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    width: 30,
+                                  ),
+                                  Text(
+                                    _measuringSystem == strings.metric
+                                        ? strings.cm
+                                        : strings.inches,
+                                    style: const TextStyle(fontSize: 22.0),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(
+                                height: 30,
+                                width: 50,
+                              ),
+                              Column(
+                                children: <Widget>[
+                                  const Text(
+                                    strings.hips,
+                                    style: TextStyle(fontSize: 28.0),
+                                  ),
+                                  const SizedBox(
+                                    width: 50,
+                                  ),
+                                  SizedBox(
+                                    width: 100,
+                                    child: TextField(
+                                      controller: _hipController,
+                                      keyboardType: TextInputType.number,
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    width: 30,
+                                  ),
+                                  Text(
+                                    _measuringSystem == strings.metric
+                                        ? strings.cm
+                                        : strings.inches,
+                                    style: const TextStyle(fontSize: 22.0),
+                                  ),
+                                ],
+                              )
+                            ],
+                          )
+                        ],
+                      ),
                     )
                   ],
                 ),
-              ],
-            ),
+              ),
+              Expanded(
+                child: Column(
+                  children: [
+                    const SizedBox(
+                      height: 40,
+                    ),
+                    const Text(
+                      strings.result,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 28.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Text(
+                      _baiResult,
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                        fontSize: 28.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Text(
+                      _baiInterpretation,
+                      style: const TextStyle(
+                        fontSize: 28.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    ElevatedButton.icon(
+                      style: ElevatedButton.styleFrom(
+                        minimumSize: const Size(250, 60),
+                      ),
+                      onPressed: () => calculateBMI(),
+                      icon: const Icon(Icons.calculate),
+                      label: const Text("Calculate BAI",
+                          style: TextStyle(fontSize: 20)),
+                    ),
+                  ],
+                ),
+              ),
+            ],
           ),
-          Expanded(
-            child: Column(
-              children: [
-                const SizedBox(
-                  height: 60,
-                ),
-                const Text(
-                  'Result: ',
-                  style: TextStyle(
-                    fontSize: 28.0,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                Text(
-                  _baiResult,
-                  style: const TextStyle(
-                    fontSize: 28.0,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                Text(
-                  _baiInterpretation,
-                  style: const TextStyle(
-                    fontSize: 28.0,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                const SizedBox(
-                  height: 30,
-                ),
-                ElevatedButton.icon(
-                  onPressed: () => calculateBMI(),
-                  icon: const Icon(Icons.calculate),
-                  label: const Text("Calculate BAI"),
-                ),
-              ],
-            ),
-          ),
-        ],
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.help),
@@ -389,16 +408,24 @@ class _BaiScreenState extends State<BaiScreen> {
             context: context,
             builder: (BuildContext context) {
               return AlertDialog(
-                insetPadding: const EdgeInsets.all(120),
+                insetPadding:
+                    EdgeInsets.all(MediaQuery.of(context).size.width * 0.1),
                 title: const Text(strings.resultInterpretation),
-                content: const Column(
-                  mainAxisSize: MainAxisSize
-                      .min, //this is here to make my column fit inside the alert dialog
-                  children: <Widget>[
-                    Text(strings.whtrDefinition),
-                    Text("\n"),
-                    Text(strings.whtrInterpretation),
-                  ],
+                content: const SingleChildScrollView(
+                  child: Column(
+                    mainAxisSize: MainAxisSize
+                        .min, //this is here to make my column fit inside the alert dialog
+                    children: <Widget>[
+                      Text(strings.baiDefinition),
+                      Text("\n"),
+                      Text(strings.baiInterpretation),
+                      Text(
+                        strings.baiDisclaimer,
+                        style: TextStyle(fontSize: 10.0),
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
+                  ),
                 ),
                 actions: <Widget>[
                   TextButton(

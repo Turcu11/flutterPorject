@@ -50,8 +50,7 @@ class _MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        // title: const Text('Turcu BMI Calculator'),
-      ),
+          ),
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),
       ),

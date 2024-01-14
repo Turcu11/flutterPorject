@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../strings/strings.dart' as strings;
 import '../screens/main_screen.dart';
@@ -15,6 +16,57 @@ class LandingScreen extends StatelessWidget {
           color: Colors.red,
         ),
         title: const Text(strings.appTitle),
+        actions: <Widget>[
+          IconButton(
+            icon: const Icon(
+              Icons.info_outline_rounded,
+              color: Colors.red,
+            ),
+            onPressed: () {
+              showDialog(
+                context: context,
+                builder: (BuildContext context) => AlertDialog(
+                  title: const Text(strings.about),
+                  content: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      const Text(strings.createdBy),
+                      const SizedBox(
+                        height: 20.0,
+                      ),
+                      TextButton(
+                        onPressed: () async {
+                          const urlString =
+                              'https://www.linkedin.com/in/iosif-turcu-9353b6225';
+                          Uri url = Uri.parse(urlString);
+                          if (await canLaunchUrl(url)) {
+                            await launchUrl(url);
+                          } else {
+                            throw 'Could not launch $url';
+                          }
+                        },
+                        child: const Text('Visit LinkedIn'),
+                      ),
+                      const SizedBox(
+                        height: 20.0,
+                      ),
+                      const Text(strings.creatorsMessage),
+                    ],
+                  ),
+                  actions: <Widget>[
+                    TextButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                      child: const Text('OK'),
+                    ),
+                  ],
+                ),
+              );
+            },
+          ),
+        ],
       ),
       body: Center(
         child: Column(
@@ -31,6 +83,7 @@ class LandingScreen extends StatelessWidget {
             ),
             const Text(
               strings.appWelcome,
+              textAlign: TextAlign.center,
               // ignore: deprecated_member_use
               textScaleFactor: 2,
             ),
