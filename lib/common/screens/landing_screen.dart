@@ -38,12 +38,12 @@ class LandingScreen extends StatelessWidget {
                       TextButton(
                         onPressed: () async {
                           const urlString =
-                              'https://www.linkedin.com/in/iosif-turcu-9353b6225';
+                              'https://www.linkedin.com/in/iosif-turcu-9353b6225/';
                           Uri url = Uri.parse(urlString);
                           if (await canLaunchUrl(url)) {
                             await launchUrl(url);
                           } else {
-                            throw 'Could not launch $url';
+                            throw 'Could not launch $urlString';
                           }
                         },
                         child: const Text('Visit LinkedIn'),
@@ -117,20 +117,24 @@ class LandingScreen extends StatelessWidget {
                   MaterialPageRoute(builder: (context) => const MainScreen()),
                 );
                 const Tooltip(
-                  message: 'Go to the next screen',
+                  message: 'Start',
                 );
               },
               icon: const Icon(
-                Icons.arrow_forward_ios_rounded,
+                Icons.play_arrow_rounded,
                 color: Colors.red,
-                size: 20.0,
+                size: 28.0,
               ),
-              label: const Text(
+              label: Text(
                 strings.getStarted,
                 style: TextStyle(
-                    fontSize: 20.0,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white),
+                  fontSize: 20.0,
+                  fontWeight: FontWeight.bold,
+                  color: Theme.of(context)
+                      .textTheme
+                      .bodyText1
+                      ?.color,
+                ),
               ),
             ),
           ),

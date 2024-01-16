@@ -241,7 +241,7 @@ class _WhtrScreenState extends State<WhtrScreen> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        child: const Icon(Icons.help),
+        child: const Icon(Icons.help_outline_outlined),
         onPressed: () {
           showDialog(
             context: context,
