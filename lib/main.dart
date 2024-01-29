@@ -17,6 +17,7 @@ class MyApp extends StatelessWidget {
       title: 'Turcu BMI Calculator',
       theme: themes.MyAppThemes.lightTheme,
       darkTheme: themes.MyAppThemes.darkTheme,
+      themeMode: ThemeMode.system,
       home: const LandingScreen(),
     );
   }

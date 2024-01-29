@@ -1,21 +1,34 @@
+// Importing necessary libraries and packages
 import 'package:flutter/material.dart';
+
+// Importing custom strings
 import '../strings/strings.dart' as strings;
 
+// BmiScreen is a StatefulWidget, which means it can maintain state that can change over time.
 class BmiScreen extends StatefulWidget {
+  // Constructor for the BmiScreen widget. The 'key' argument is optional and is used for identifying widgets in 
+  // Flutter's widget tree. It is passed to the superclass constructor.
   const BmiScreen({Key? key}) : super(key: key);
 
+  // The createState method is called when Flutter needs to create a new mutable state for this widget.
   @override
-  // ignore: library_private_types_in_public_api
   _BmiScreenState createState() => _BmiScreenState();
 }
 
+// _BmiScreenState is the mutable state for a BmiScreen widget.
 class _BmiScreenState extends State<BmiScreen> {
-  String _measuringSystem = strings.metric; // Initial value to avoid null
+  // _measuringSystem is a string that stores the current measuring system. It is initially set to metric.
+  String _measuringSystem = strings.metric;
+
+  // _heightController and _weightController are text editing controllers that control the text in a TextField.
   final TextEditingController _heightController = TextEditingController();
   final TextEditingController _weightController = TextEditingController();
+
+  // _bmiResult and _bmiInterpretation are strings that store the result and interpretation of the BMI calculation.
   String _bmiResult = '';
   String _bmiInterpretation = '';
 
+  // generateBMIInterpretation is a method that generates a BMI interpretation based on a given BMI.
   void generateBMIInterpretation(double bmi) {
     if (bmi < 18.5) {
       _bmiInterpretation = strings.underweight;
@@ -28,10 +41,12 @@ class _BmiScreenState extends State<BmiScreen> {
     }
   }
 
+  // calculateMetricBMI is a method that calculates the BMI using the metric system.
   double calculateMetricBMI(double height, double weight) {
     return ((weight / height / height) * 10000);
   }
 
+  // calculateImperialBMI is a method that calculates the BMI using the imperial system.
   double calculateImperialBMI(double height, double weight) {
     return (weight / (height * height)) * 703;
   }

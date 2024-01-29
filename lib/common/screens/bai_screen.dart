@@ -1,24 +1,38 @@
+// Importing necessary libraries and packages
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
+
+// Importing custom strings
 import '../strings/strings.dart' as strings;
 
+// BaiScreen is a StatefulWidget, which means it can maintain state that can change over time.
 class BaiScreen extends StatefulWidget {
+  // Constructor for the BaiScreen widget. The 'key' argument is optional and is used for identifying widgets in 
+  // Flutter's widget tree. It is passed to the superclass constructor.
   const BaiScreen({Key? key}) : super(key: key);
 
+  // The createState method is called when Flutter needs to create a new mutable state for this widget.
   @override
-  // ignore: library_private_types_in_public_api
   _BaiScreenState createState() => _BaiScreenState();
 }
 
+// _BaiScreenState is the mutable state for a BaiScreen widget.
 class _BaiScreenState extends State<BaiScreen> {
-  String _measuringSystem = 'Metric'; // Initial value to avoid null
-  String _userGender = 'Male'; // Initial value to avoid null
-  String _userAge = '20-39'; // Initial value to avoid null
+  // _measuringSystem, _userGender, and _userAge are strings that store the current measuring system, user gender, 
+  // and user age. They are initially set to avoid null.
+  String _measuringSystem = 'Metric';
+  String _userGender = 'Male';
+  String _userAge = '20-39';
+
+  // _heightController and _hipController are text editing controllers that control the text in a TextField.
   final TextEditingController _heightController = TextEditingController();
   final TextEditingController _hipController = TextEditingController();
+
+  // _baiResult and _baiInterpretation are strings that store the result and interpretation of the BAI calculation.
   String _baiResult = '';
   String _baiInterpretation = '';
 
+  // generateMaleInterpretation is a method that generates a BAI interpretation based on a given BAI for male users.
   void generateMaleInterpretation(double bai) {
     if (_userAge == '20-39') {
       if (bai < 8) {
@@ -99,33 +113,49 @@ class _BaiScreenState extends State<BaiScreen> {
     }
   }
 
+  // calculateMetricBAI is a method that calculates the Body Adiposity Index (BAI) using the metric system.
   double calculateMetricBAI(double height, double hip) {
+    // Convert height from cm to meters
     double heightInMeters = height / 100;
+    // Calculate BAI using the formula: (hip / (height ^ 1.5)) - 18
     return (hip / (math.pow(heightInMeters, 1.5))) - 18;
   }
 
+  // calculateImperialBAI is a method that calculates the BAI using the imperial system.
   double calculateImperialBAI(double height, double hip) {
+    // Convert height and hip from inches to cm
     height = height * 2.54;
     hip = hip * 2.54;
+    // Convert height from cm to meters
     double heightInMeters = height / 100;
+    // Calculate BAI using the formula: (hip / (height ^ 1.5)) - 18
     return (hip / (math.pow(heightInMeters, 1.5))) - 18;
   }
 
+  // calculateBMI is a method that calculates the BAI and generates the interpretation.
   void calculateBMI() {
+    // Get the text from the height and hip TextFields
     String heightText = _heightController.text;
     String hipText = _hipController.text;
 
+    // Check if either of the TextFields is empty
     if (heightText.isEmpty || hipText.isEmpty) {
       _baiResult = 'Please enter both height and hips.';
-    } else if (!isNumeric(heightText) || !isNumeric(hipText)) {
+    } 
+    // Check if the entered values are valid numbers
+    else if (!isNumeric(heightText) || !isNumeric(hipText)) {
       _baiResult = 'Please enter valid numbers.';
-    } else {
+    } 
+    else {
+      // Parse the height and hip values to double
       double height = double.parse(heightText);
       double hip = double.parse(hipText);
       double bai;
 
+      // Calculate BAI based on the selected measuring system
       if (_measuringSystem == 'Metric') {
         bai = calculateMetricBAI(height, hip);
+        // Generate BAI interpretation based on the user's gender
         if (_userGender == 'Male') {
           generateMaleInterpretation(bai);
         } else {
@@ -133,6 +163,7 @@ class _BaiScreenState extends State<BaiScreen> {
         }
       } else {
         bai = calculateImperialBAI(height, hip);
+        // Generate BAI interpretation based on the user's gender
         if (_userGender == 'Male') {
           generateMaleInterpretation(bai);
         } else {
